@@ -2237,10 +2237,9 @@ function drawCenterSentence() {
         // 화살표 방향 계산
         const deltaX = arrowEndX - arrowStartX;
         const deltaY = arrowEndY - arrowStartY;
-        const angle = Math.atan2(deltaY, deltaX);
-          // 화살표 끝점을 2px 더 진행하도록 연장하고, 전체 화살표를 x축 좌측으로 2px 이동
+        const angle = Math.atan2(deltaY, deltaX);        // 화살표 끝점을 2px 더 진행하도록 연장하고, 전체 화살표를 x축 좌측으로 2px, y축 위쪽으로 1px 이동
         const extendedCurrentX = currentX + Math.cos(angle) * 2 - 2;
-        const extendedCurrentY = currentY + Math.sin(angle) * 2;        // 화살표 그리기
+        const extendedCurrentY = currentY + Math.sin(angle) * 2 - 1;// 화살표 그리기
         ctx.strokeStyle = '#ffff00'; // 노란색 화살표
         ctx.fillStyle = '#ffff00';
         ctx.lineWidth = 1.6; // 20% 감소 (2 → 1.6)
