@@ -2230,8 +2230,7 @@ function drawCenterSentence() {
     if (arrowAnimationActive && arrowAnimationProgress > 0) {
         ctx.save();
         ctx.globalAlpha = centerAlpha * 0.8; // 약간 투명하게
-        
-        // 현재 애니메이션 진행도에 따른 화살표 위치 계산
+          // 현재 애니메이션 진행도에 따른 화살표 위치 계산
         const currentX = arrowStartX + (arrowEndX - arrowStartX) * arrowAnimationProgress;
         const currentY = arrowStartY + (arrowEndY - arrowStartY) * arrowAnimationProgress;
         
@@ -2239,33 +2238,34 @@ function drawCenterSentence() {
         const deltaX = arrowEndX - arrowStartX;
         const deltaY = arrowEndY - arrowStartY;
         const angle = Math.atan2(deltaY, deltaX);
-          // 화살표 그리기
-        ctx.strokeStyle = '#FF6B6B'; // 빨간색 화살표
-        ctx.fillStyle = '#FF6B6B';
+          // 화살표 끝점을 2px 더 진행하도록 연장하고, 전체 화살표를 x축 좌측으로 2px 이동
+        const extendedCurrentX = currentX + Math.cos(angle) * 2 - 2;
+        const extendedCurrentY = currentY + Math.sin(angle) * 2;        // 화살표 그리기
+        ctx.strokeStyle = '#ffff00'; // 노란색 화살표
+        ctx.fillStyle = '#ffff00';
         ctx.lineWidth = 1.6; // 20% 감소 (2 → 1.6)
         ctx.lineCap = 'round';
         
         const arrowLength = 12; // 20% 감소 (15 → 12)
         const arrowHeadLength = 6.4; // 20% 감소 (8 → 6.4)
         const arrowHeadAngle = Math.PI / 6; // 30도
-        
-        // 화살표 몸체 그리기
+          // 화살표 몸체 그리기
         ctx.beginPath();
-        ctx.moveTo(currentX - Math.cos(angle) * arrowLength, currentY - Math.sin(angle) * arrowLength);
-        ctx.lineTo(currentX, currentY);
+        ctx.moveTo(extendedCurrentX - Math.cos(angle) * arrowLength, extendedCurrentY - Math.sin(angle) * arrowLength);
+        ctx.lineTo(extendedCurrentX, extendedCurrentY);
         ctx.stroke();
         
         // 화살표 머리 그리기
         ctx.beginPath();
-        ctx.moveTo(currentX, currentY);
+        ctx.moveTo(extendedCurrentX, extendedCurrentY);
         ctx.lineTo(
-          currentX - arrowHeadLength * Math.cos(angle - arrowHeadAngle),
-          currentY - arrowHeadLength * Math.sin(angle - arrowHeadAngle)
+          extendedCurrentX - arrowHeadLength * Math.cos(angle - arrowHeadAngle),
+          extendedCurrentY - arrowHeadLength * Math.sin(angle - arrowHeadAngle)
         );
-        ctx.moveTo(currentX, currentY);
+        ctx.moveTo(extendedCurrentX, extendedCurrentY);
         ctx.lineTo(
-          currentX - arrowHeadLength * Math.cos(angle + arrowHeadAngle),
-          currentY - arrowHeadLength * Math.sin(angle + arrowHeadAngle)
+          extendedCurrentX - arrowHeadLength * Math.cos(angle + arrowHeadAngle),
+          extendedCurrentY - arrowHeadLength * Math.sin(angle + arrowHeadAngle)
         );
         ctx.stroke();
         
